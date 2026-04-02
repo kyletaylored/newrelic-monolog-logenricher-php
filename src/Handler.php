@@ -29,9 +29,9 @@ class Handler extends AbstractHandler
      *
      * @param array $record
      */
-    protected function write(array $record): void
+    protected function write(\Monolog\LogRecord $record): void
     {
-        $this->send($record["formatted"]);
+        $this->send($record->formatted);
     }
 
     /**
@@ -46,7 +46,7 @@ class Handler extends AbstractHandler
     {
         $level = $this->level;
         $records = array_filter($records, function ($record) use ($level) {
-            return ($record['level'] >= $level);
+            return ($record->level->value >= $level->value);
         });
         if ($records) {
             $this->sendBatch($this->getFormatter()->formatBatch($records));

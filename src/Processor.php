@@ -28,11 +28,11 @@ class Processor implements ProcessorInterface
      * @param  array $record A Monolog record
      * @return array Given record, with New Relic metadata added if available
      */
-    public function __invoke(array $record)
+    public function __invoke(\Monolog\LogRecord $record): \Monolog\LogRecord
     {
         if ($this->contextAvailable()) {
             $linking_data = newrelic_get_linking_metadata();
-            $record['extra']['newrelic-context'] = $linking_data;
+            return $record->with(extra: array_merge($record->extra, ['newrelic-context' => $linking_data]));
         }
         return $record;
     }
