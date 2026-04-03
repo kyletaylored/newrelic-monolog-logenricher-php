@@ -49,7 +49,7 @@ abstract class AbstractFormatter extends JsonFormatter
      * @param int $depth
      * @return mixed
      */
-    protected function normalize($data, $depth = 0)
+    protected function normalize(mixed $data, int $depth = 0): mixed
     {
         if ($depth == 0) {
             if ($data instanceof \Monolog\LogRecord) {
