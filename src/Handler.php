@@ -31,7 +31,7 @@ class Handler extends AbstractHandler
      */
     protected function write(\Monolog\LogRecord $record): void
     {
-        $this->send($record->formatted);
+        $this->send('[{"logs":[' . $record->formatted . ']}]');
     }
 
     /**
