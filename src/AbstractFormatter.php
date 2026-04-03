@@ -52,6 +52,9 @@ abstract class AbstractFormatter extends JsonFormatter
     protected function normalize($data, $depth = 0)
     {
         if ($depth == 0) {
+            if ($data instanceof \Monolog\LogRecord) {
+                $data = $data->toArray();
+            }
             if (isset($data['extra']['newrelic-context'])) {
                 $data = array_merge($data, $data['extra']['newrelic-context']);
                 unset($data['extra']['newrelic-context']);
