@@ -111,7 +111,11 @@ abstract class AbstractHandler extends AbstractProcessingHandler
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        Curl\Util::execute($ch, 5, false);
+        try {
+            Curl\Util::execute($ch, 5);
+        } catch (\RuntimeException $e) {
+            // Swallow curl errors to avoid breaking the logging pipeline.
+        }
     }
 
     /**
@@ -134,7 +138,11 @@ abstract class AbstractHandler extends AbstractProcessingHandler
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        Curl\Util::execute($ch, 5, false);
+        try {
+            Curl\Util::execute($ch, 5);
+        } catch (\RuntimeException $e) {
+            // Swallow curl errors to avoid breaking the logging pipeline.
+        }
     }
 
     /**
